@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>رستوران خان داداش</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+  <style>
+    :root {
+      --bg-dark: #121418;
+      --card-bg: #1c1f26;
+      --accent: #d97706;
+      --accent-hover: #b45309;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border: #2d333f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+    body { background-color: var(--bg-dark); color: var(--text); min-height: 100vh; padding-bottom: 90px; }
+    header { background: #181b22; border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 50; }
+    .logo-box h1 { font-size: 1.3rem; color: #fbbf24; }
+    .logo-box p { font-size: 0.8rem; color: var(--text-muted); }
+    .header-btns { display: flex; gap: 10px; }
+    .btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: 12px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.2s; text-decoration: none; }
+    .btn:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-gold { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; border: none; font-weight: bold; }
+    .btn-gold:hover { opacity: 0.95; color: #fff; }
+
+    /* سرگرمی و بازی‌ها */
+    .game-shortcuts { display: flex; justify-content: center; gap: 12px; padding: 18px 20px 8px; flex-wrap: wrap; }
+    .game-badge { background: #1e2430; border: 1px solid #333d4e; border-radius: 20px; padding: 6px 14px; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 6px; color: #93c5fd; }
+    .game-badge:hover { border-color: #60a5fa; }
+
+    /* کاروسل بشقاب‌ها */
+    .carousel-section { padding: 20px 0 10px; position: relative; overflow: hidden; }
+    .section-title { text-align: center; margin-bottom: 14px; }
+    .section-title h2 { font-size: 1.4rem; color: #fbbf24; }
+    .section-title p { font-size: 0.85rem; color: var(--text-muted); }
+    .carousel-container { display: flex; align-items: center; justify-content: center; position: relative; max-width: 600px; margin: 0 auto; height: 260px; }
+    .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 1.2rem; }
+    .arrow-right { right: 10px; }
+    .arrow-left { left: 10px; }
+    .dish-card { position: absolute; transition: all 0.4s ease; text-align: center; cursor: pointer; }
+    .dish-card img { width: 170px; height: 170px; border-radius: 50%; object-fit: cover; border: 3px solid #fbbf24; box-shadow: 0 10px 25px rgba(0,0,0,0.6); }
+    .dish-card .dish-label { margin-top: 10px; font-weight: bold; font-size: 0.95rem; }
+
+    /* حالت‌های موقعیت کاروسل */
+    .pos-center { transform: scale(1.15) translateX(0); z-index: 5; opacity: 1; }
+    .pos-center img { border-color: #f59e0b; box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35); }
+    .pos-left { transform: scale(0.8) translateX(-140px); z-index: 2; opacity: 0.5; }
+    .pos-right { transform: scale(0.8) translateX(140px); z-index: 2; opacity: 0.5; }
+    .pos-hidden { transform: scale(0.5); opacity: 0; pointer-events: none; }
+
+    /* لیست غذاها */
+    .menu-list-section { max-width: 800px; margin: 20px auto; padding: 0 20px; }
+    .category-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 2px solid #2d333f; padding-bottom: 8px; }
+    .category-header h3 { font-size: 1.2rem; color: #fbbf24; }
+    .menu-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media(min-width: 600px) { .menu-grid { grid-template-columns: 1fr 1fr; } }
+    .food-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .food-info h4 { font-size: 1rem; margin-bottom: 6px; }
+    .food-info p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+    .price { font-weight: bold; color: #34d399; font-size: 0.95rem; }
+    .food-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .status-badge { font-size: 0.72rem; padding: 3px 8px; border-radius: 8px; }
+    .status-available { background: #064e3b; color: #6ee7b7; }
+    .status-unavailable { background: #451a1a; color: #fca5a5; }
+
+    /* پنجره مودال پاپ‌آپ */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+    .modal.active { display: flex; }
+    .modal-content { background: #1c212b; border: 1px solid #374151; border-radius: 20px; max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 24px; position: relative; }
+    .close-btn { position: absolute; left: 18px; top: 18px; background: none; border: none; font-size: 1.4rem; color: #9ca3af; cursor: pointer; }
+    .close-btn:hover { color: #fff; }
+
+    /* فال حافظ */
+    .intent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
+    .intent-btn { background: #151820; border: 1px solid #374151; color: var(--text); padding: 12px; border-radius: 12px; cursor: pointer; font-size: 0.85rem; text-align: center; }
+    .intent-btn:hover, .intent-btn.selected { border-color: #fbbf24; background: #262c3a; color: #fbbf24; }
+    .hafez-verses { background: #11141a; border-right: 3px solid #fbbf24; padding: 16px; border-radius: 8px; margin: 16px 0; line-height: 2.2; font-size: 0.95rem; text-align: center; }
+    .hafez-interp { background: #1e2638; border-radius: 12px; padding: 14px; margin-top: 12px; font-size: 0.88rem; line-height: 1.8; color: #e5e7eb; }
+    .hafez-wisdom { margin-top: 10px; font-size: 0.82rem; color: #fbbf24; text-align: center; font-style: italic; }
+
+    /* سبد سفارش چسبان */
+    .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #181c24; border-top: 1px solid var(--border); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 40; }
+  </style>
+</head>
+<body>
+
+  <!-- هدر -->
+  <header>
+    <div class="logo-box">
+      <h1>رستوران خان داداش</h1>
+      <p>طعم اصیل و ماندگار غذاهای سنتی ایرانی</p>
+    </div>
+    <div class="header-btns">
+      <button class="btn btn-gold" onclick="openHafezModal()">📜 فال حافظ</button>
+      <button class="btn" onclick="openGameModal()">🎮 چالش هوش</button>
+      <a href="tel:09142745054" class="btn">📞 ۰۹۱۴۲۷۴۵۰۵۴</a>
+    </div>
+  </header>
+
+  <!-- میانبر بازی و سرگرمی -->
+  <div class="game-shortcuts">
+    <div class="game-badge" onclick="openHafezModal()">✨ تفأل به دیوان حافظ (با نیت اختصاصی)</div>
+    <div class="game-badge" onclick="openGameModal()">🏆 چالش ۸ مرحله‌ای اطلاعات عمومی سرآشپز</div>
+  </div>
+
+  <!-- کاروسل گردونه بشقاب‌ها -->
+  <section class="carousel-section">
+    <div class="section-title">
+      <h2 id="catTitle">چلو و غذاهای برنجی</h2>
+      <p id="catDesc">سینی‌های مجلل چلو، زرشک‌پلو با مرغ، ته‌چین و کته اصیل</p>
+    </div>
+    <div class="carousel-container">
+      <button class="nav-arrow arrow-right" onclick="prevCategory()">&#10095;</button>
+      <div id="carouselItems"></div>
+      <button class="nav-arrow arrow-left" onclick="nextCategory()">&#10094;</button>
+    </div>
+  </section>
+
+  <!-- لیست غذاها -->
+  <section class="menu-list-section">
+    <div class="category-header">
+      <h3 id="currentMenuName">اقلام منو</h3>
+      <span style="font-size: 0.85rem; color: var(--text-muted);" id="menuSourceStatus">به‌روزرسانی خودکار</span>
+    </div>
+    <div class="menu-grid" id="menuItemsGrid"></div>
+  </section>
+
+  <!-- نوار پایین برای تماس -->
+  <div class="bottom-bar">
+    <div>
+      <div style="font-size: 0.8rem; color: var(--text-muted);">سفارش تلفنی و پیک</div>
+      <div style="font-weight: bold; color: #fbbf24;">۰۹۱۴۲۷۴۵۰۵۴</div>
+    </div>
+    <a href="tel:09142745054" class="btn btn-gold">ثبت سفارش فوری ➔</a>
+  </div>
+
+  <!-- مودال فال حافظ -->
+  <div class="modal" id="hafezModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('hafezModal')">&times;</button>
+      <h3 style="color: #fbbf24; text-align: center; margin-bottom: 8px;">تفأل به دیوان خواجه شیراز</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">نیت قلبی خود را معین کنید و دکمه را لمس فرمایید</p>
+      
+      <div class="intent-grid">
+        <button class="intent-btn selected" onclick="selectIntent('work', this)">💼 کاری و مالی</button>
+        <button class="intent-btn" onclick="selectIntent('love', this)">❤️ عاشقانه و دل</button>
+        <button class="intent-btn" onclick="selectIntent('decision', this)">⚖️ دوراهی و تصمیم</button>
+        <button class="intent-btn" onclick="selectIntent('general', this)">🌿 احوال کلی و سرنوشت</button>
+      </div>
+
+      <button class="btn btn-gold" style="width: 100%; justify-content: center; padding: 12px; margin-top: 6px;" onclick="drawOmen()">📖 باز کردن فال</button>
+
+      <div id="hafezResult" style="display: none; margin-top: 16px;">
+        <h4 id="omenTitle" style="color: #fbbf24; text-align: center; margin-bottom: 6px;"></h4>
+        <div class="hafez-verses" id="omenVerses"></div>
+        <div class="hafez-interp">
+          <strong>تعبیر نیت شما:</strong>
+          <p id="omenInterp" style="margin-top: 6px;"></p>
+        </div>
+        <div class="hafez-wisdom" id="omenWisdom"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال چالش هوش -->
+  <div class="modal" id="gameModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal('gameModal')">&times;</button>
+      <h3 style="color: #fbbf24; text-align: center; margin-bottom: 8px;">چالش اطلاعات عمومی سرآشپز</h3>
+      <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">به سوال زیر پاسخ دهید و پاداش ویژه بگیرید:</p>
+      <div style="background: #151820; border-radius: 12px; padding: 16px; margin: 16px 0; text-align: center;">
+        <p style="font-size: 1rem; font-weight: bold; margin-bottom: 14px;">چاشنی اصلی و رنگ‌بخش زرشک‌پلو اصیل ایرانی چیست؟</p>
+        <div style="display: grid; gap: 8px;">
+          <button class="btn" style="justify-content: center;" onclick="alert('احسنت! پاسخ صحیح زعفران قائنات است. کد هدیه سرآشپز: KHAN90')">زعفران دم‌کرده</button>
+          <button class="btn" style="justify-content: center;" onclick="alert('پاسخ نادرست بود. دوباره تلاش کنید!')">پاپریکا</button>
+          <button class="btn" style="justify-content: center;" onclick="alert('پاسخ نادرست بود. دوباره تلاش کنید!')">زردچوبه</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // دسته‌بندی‌های کاروسل
+    const CATEGORIES = [
+      { id: "rice", name: "چلو و غذاهای برنجی", desc: "سینی‌های مجلل چلو زعفرانی، کته و زرشک‌پلو", img: "https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=500&q=80" },
+      { id: "kebab", name: "کباب و خوراک", desc: "کباب کوبیده نگین‌دار، برگ، جوجه زعفرانی و شیشلیک", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=500&q=80" },
+      { id: "stew", name: "خورشت‌های ایرانی", desc: "قورمه‌سبزی سنتی، قیمه نثار و فسنجان جاافتاده", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" },
+      { id: "side", name: "مخلفات و دورچین", desc: "سالاد شیرازی، ماست چکیده محلی، زیتون پرورده", img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" },
+      { id: "drink", name: "نوشیدنی‌ها", desc: "دوغ آبعلی نعنایی، شربت زعفران و بیدمشک", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=500&q=80" }
+    ];
+
+    // غذاهای هر بخش
+    const MENU_ITEMS = {
+      rice: [
+        { name: "چلو جوجه زعفرانی مخصوص", desc: "برنج ایرانی اعلا به همراه یک سیخ جوجه زعفرانی و کره", price: "۲۸۵,۰۰۰", status: "موجود" },
+        { name: "چلو کباب کوبیده زعفرانی (دو سیخ)", desc: "دو سیخ کباب گوسفندی به همراه برنج زعفرانی و گوجه", price: "۳۴۰,۰۰۰", status: "موجود" },
+        { name: "زرشک پلو با مرغ مجلسی", desc: "ران مرغ سس‌پز با خلال پسته، زرشک و برنج ایرانی", price: "۲۴۰,۰۰۰", status: "موجود" },
+        { name: "سینی مخصوص خان داداش (۲ نفره)", desc: "یک سیخ کوبیده، یک سیخ جوجه، دو پرس برنج و دورچین", price: "۵۸۰,۰۰۰", status: "موجود" }
+      ],
+      kebab: [
+        { name: "کباب برگ مخصوص گوسفندی", desc: "راسته گوسفندی مرینیت‌شده فوق‌العاده لذیذ", price: "۴۲۰,۰۰۰", status: "موجود" },
+        { name: "جوجه کباب با استخوان", desc: "جوجه کامل با طعم لیمو و زعفران اصیل", price: "۲۹۰,۰۰۰", status: "موجود" },
+        { name: "کباب لقمه نگین‌دار", desc: "ترکیب گوشت چرخ‌کرده با نگین‌های جوجه کباب", price: "۳۱۰,۰۰۰", status: "ناموجود" }
+      ],
+      stew: [
+        { name: "چلو خورش قورمه‌سبزی جاافتاده", desc: "سبزی قورمه سرخ‌شده، لوبیا قرمز و گوشت گوسفندی", price: "۲۱۰,۰۰۰", status: "موجود" },
+        { name: "چلو خورش قیمه بادمجان", desc: "لپه تبریز، لیمو عمانی، بادمجان سرخ‌شده و گوشت", price: "۲۱۰,۰۰۰", status: "موجود" }
+      ],
+      side: [
+        { name: "ماست موسیر کوزه‌ای محلی", desc: "ماست چکیده پرچرب و موسیر تازه", price: "۴۵,۰۰۰", status: "موجود" },
+        { name: "سالاد شیرازی سنتی با آبغوره", desc: "خیار، گوجه، پیاز و نعنای خوش‌عطر", price: "۴۰,۰۰۰", status: "موجود" },
+        { name: "زیتون پرورده رودبار", desc: "گردو، رب انار ملس و چوچاق محلی", price: "۶۵,۰۰۰", status: "موجود" }
+      ],
+      drink: [
+        { name: "دوغ محلی نعنا و گل سرخ", desc: "دوغ سنتی گازدار در بطری مخصوص", price: "۳۵,۰۰۰", status: "موجود" },
+        { name: "شربت زعفران و خاکشیر", desc: "خنک و سنتی با گلاب اعلای کاشان", price: "۴۵,۰۰۰", status: "موجود" }
+      ]
+    };
+
+    let currentIndex = 0;
+    let selectedIntent = 'work';
+    let hafezDB = null;
+
+    // بارگذاری فایل hafez.json
+    async function initHafezData() {
+      try {
+        const res = await fetch('hafez.json');
+        if (res.ok) {
+          hafezDB = await res.json();
+          console.log("گنجینه حافظ با موفقیت بارگذاری شد");
+        }
+      } catch (e) {
+        console.warn("خطا در بارگذاری hafez.json:", e);
+      }
+    }
+    initHafezData();
+
+    function renderCarousel() {
+      const container = document.getElementById("carouselItems");
+      container.innerHTML = "";
+      const cat = CATEGORIES[currentIndex];
+      document.getElementById("catTitle").innerText = cat.name;
+      document.getElementById("catDesc").innerText = cat.desc;
+      document.getElementById("currentMenuName").innerText = "اقلام " + cat.name;
+
+      CATEGORIES.forEach((item, idx) => {
+        const card = document.createElement("div");
+        card.className = "dish-card";
+        let diff = (idx - currentIndex + CATEGORIES.length) % CATEGORIES.length;
+        if (diff === 0) {
+          card.classList.add("pos-center");
+        } else if (diff === 1 || diff === -(CATEGORIES.length - 1)) {
+          card.classList.add("pos-left");
+        } else if (diff === CATEGORIES.length - 1 || diff === -1) {
+          card.classList.add("pos-right");
+        } else {
+          card.classList.add("pos-hidden");
+        }
+        card.innerHTML = `<img src="${item.img}" alt="${item.name}" /><div class="dish-label">${item.name}</div>`;
+        card.onclick = () => { currentIndex = idx; renderCarousel(); renderMenu(); };
+        container.appendChild(card);
+      });
+    }
+
+    function prevCategory() {
+      currentIndex = (currentIndex - 1 + CATEGORIES.length) % CATEGORIES.length;
+      renderCarousel();
+      renderMenu();
+    }
+
+    function nextCategory() {
+      currentIndex = (currentIndex + 1) % CATEGORIES.length;
+      renderCarousel();
+      renderMenu();
+    }
+
+    function renderMenu() {
+      const catId = CATEGORIES[currentIndex].id;
+      const items = MENU_ITEMS[catId] || [];
+      const grid = document.getElementById("menuItemsGrid");
+      grid.innerHTML = "";
+      items.forEach(food => {
+        const isAvail = food.status === "موجود";
+        const card = document.createElement("div");
+        card.className = "food-card";
+        card.innerHTML = `
+          <div class="food-info">
+            <h4>${food.name}</h4>
+            <p>${food.desc}</p>
+            <div class="price">${food.price} تومان</div>
+          </div>
+          <div class="food-actions">
+            <span class="status-badge ${isAvail ? 'status-available' : 'status-unavailable'}">${food.status}</span>
+            <a href="tel:09142745054" class="btn btn-gold" style="font-size: 0.75rem; padding: 6px 12px; ${!isAvail ? 'opacity: 0.4; pointer-events: none;' : ''}">سفارش</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // مودال‌ها
+    function openHafezModal() { document.getElementById("hafezModal").classList.add("active"); }
+    function openGameModal() { document.getElementById("gameModal").classList.add("active"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+
+    function selectIntent(intent, btn) {
+      selectedIntent = intent;
+      document.querySelectorAll(".intent-btn").forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    }
+
+    async function drawOmen() {
+      let pool = [];
+      if (hafezDB && hafezDB[selectedIntent]) {
+        pool = hafezDB[selectedIntent];
+      }
+      
+      let omen;
+      if (pool.length > 0) {
+        omen = pool[Math.floor(Math.random() * pool.length)];
+      } else {
+        // فال اضطراری در صورت عدم بارگذاری فایل
+        omen = {
+          title: "غزل شماره ۱۶۷",
+          verses: [
+            "ستاره‌ای بدرخشد و ماه مجلس شد / دل رمیده ما را رفیق و همدم شد",
+            "نگار من که به مکتب نرفت و خط ننوشت / به غمزه مسئله آموز صد مدرس شد",
+            "گر چه منزل بس خطرناک است و پایان ناپدید / هیچ راهی نیست کان را نیست پایان غم مخور"
+          ],
+          interpretation: "بخت با شما یار است و گشایشی نیکو در کار و نیت شما پدید خواهد آمد.",
+          wisdom: "صبر و توکل کلید کامیابی است."
+        };
+      }
+
+      document.getElementById("omenTitle").innerText = omen.title;
+      document.getElementById("omenVerses").innerHTML = omen.verses.join("<br>");
+      document.getElementById("omenInterp").innerText = omen.interpretation;
+      document.getElementById("omenWisdom").innerText = "« " + omen.wisdom + " »";
+      document.getElementById("hafezResult").style.display = "block";
+    }
+
+    // مقداردهی اولیه
+    renderCarousel();
+    renderMenu();
+  </script>
+</body>
+</html>
