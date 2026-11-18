@@ -31,7 +31,7 @@
     </script>
 
     <style>
-- {
+        * {
             box-sizing: border-box;
             font-family: 'Vazirmatn', sans-serif;
             -webkit-tap-highlight-color: transparent;
@@ -165,10 +165,6 @@
                     <span class="hidden sm:inline">حافظه تصویری</span>
                     <span class="sm:hidden">بازی</span>
                 </button>
-                <button onclick="openModal('hafezModal')" class="flex items-center gap-1.5 bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/40 text-purple-200 px-3 py-2 rounded-xl text-xs md:text-sm font-medium transition">
-                    <i class="fa-solid fa-book-open text-purple-400"></i>
-                    <span class="hidden sm:inline">فال حافظ</span>
-                </button>
                 <button onclick="openCartModal()" class="relative flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-2 rounded-xl text-xs md:text-sm font-medium transition">
                     <i class="fa-solid fa-bag-shopping text-orange-400"></i>
                     <span id="cartCountBadge" class="absolute -top-1.5 -left-1.5 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">۰</span>
@@ -227,7 +223,7 @@
                 چلو و غذاهای برنجی
             </h2>
             <p id="activeCategoryDesc" class="text-xs md:text-sm text-slate-400 max-w-md mx-auto mt-1">
-                سینی مجلل چلو مرغ زعفرانی، ته‌چین، خورش و برنج اصیل ایرانی
+                سینی مجلل چلو مرغ زعفرانی، ته‌چین و برنج اصیل ایرانی
             </p>
         </div>
 
@@ -299,8 +295,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- ==================== MODALS ==================== -->
 
     <!-- Quiz Modal -->
     <div id="quizModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3">
@@ -415,83 +409,6 @@
         </div>
     </div>
 
-    <!-- Hafez Divan Modal -->
-    <div id="hafezModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3">
-        <div class="bg-gradient-to-b from-slate-900 to-indigo-950 border border-purple-500/40 w-full max-w-lg rounded-3xl p-5 relative shadow-2xl flex flex-col max-h-[92vh] overflow-y-auto">
-            <div class="flex items-center justify-between pb-3 border-b border-purple-500/20">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-300 flex items-center justify-center border border-purple-500/30">
-                        <i class="fa-solid fa-feather-pointed text-sm"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-white text-sm">فال حافظ رستوران خان داداش</h4>
-                        <p class="text-[10px] text-purple-300">تفألی معنوی و چندوجهی به دیوان خواجه</p>
-                    </div>
-                </div>
-                <button onclick="closeModal('hafezModal')" class="text-slate-400 hover:text-white p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <!-- Initial View -->
-            <div id="hafezInitialView" class="py-5 text-center">
-                <p class="text-xs text-slate-300 mb-3">نیت خود را مشخص کنید و روی دکمه گشودن دیوان بزنید:</p>
-                <div class="grid grid-cols-2 gap-2 max-w-xs mx-auto mb-5 text-right">
-                    <button type="button" onclick="selectIntention('general', this)" class="intent-pill active bg-purple-600/40 border border-purple-400 text-purple-200 text-xs p-2 rounded-xl">
-                        احوال کلی و سرنوشت
-                    </button>
-                    <button type="button" onclick="selectIntention('love', this)" class="intent-pill bg-slate-800 border border-purple-500/20 text-slate-300 text-xs p-2 rounded-xl">
-                        عاشقانه و دل
-                    </button>
-                    <button type="button" onclick="selectIntention('career', this)" class="intent-pill bg-slate-800 border border-purple-500/20 text-slate-300 text-xs p-2 rounded-xl">
-                        کاری و مالی
-                    </button>
-                    <button type="button" onclick="selectIntention('decision', this)" class="intent-pill bg-slate-800 border border-purple-500/20 text-slate-300 text-xs p-2 rounded-xl">
-                        دوراهی و تصمیم
-                    </button>
-                </div>
-                <button onclick="takeFaal()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-semibold text-xs px-7 py-2.5 rounded-xl shadow-lg shadow-purple-600/30 transition">
-                    گشودن دیوان حافظ
-                </button>
-            </div>
-
-            <!-- Result View -->
-            <div id="hafezResultView" class="hidden py-3">
-                <div class="bg-purple-950/40 border border-purple-500/30 rounded-2xl p-4 mb-3 text-right">
-                    <div class="flex items-center justify-between mb-2 text-xs text-purple-300 font-semibold border-b border-purple-500/20 pb-1.5">
-                        <span id="hafezGhazalNumber">غزل دیوان حافظ</span>
-                        <span id="hafezIntentBadge" class="text-[10px] bg-purple-500/20 border border-purple-400/30 px-2 py-0.5 rounded-full text-purple-200">احوال کلی</span>
-                    </div>
-                    <p id="hafezPoem" class="text-xs sm:text-sm text-purple-100 font-serif leading-loose text-center whitespace-pre-line py-1"></p>
-                </div>
-
-                <div class="space-y-2 mb-4 text-right">
-                    <div class="bg-purple-900/30 border border-purple-500/30 rounded-xl p-3">
-                        <span class="text-xs font-bold text-amber-300 block mb-1">پیام اصلی و راز غزل:</span>
-                        <p id="hafezCoreTheme" class="text-xs text-slate-200 leading-relaxed"></p>
-                    </div>
-                    <div class="bg-indigo-950/40 border border-indigo-500/30 rounded-xl p-3">
-                        <span id="hafezIntentHeader" class="text-xs font-bold text-cyan-300 block mb-1">تعبیر متناسب با نیت:</span>
-                        <p id="hafezIntentInterpretation" class="text-xs text-slate-200 leading-relaxed"></p>
-                    </div>
-                    <div class="bg-slate-900/70 border border-slate-700/60 rounded-xl p-3">
-                        <span class="text-[11px] font-semibold text-purple-300 block mb-1">پند و حکمت خواجه:</span>
-                        <p id="hafezWisdom" class="text-xs text-slate-300 italic"></p>
-                    </div>
-                </div>
-
-                <div class="flex gap-2">
-                    <button onclick="takeFaal()" class="w-1/2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs py-2 rounded-xl transition">
-                        فال مجدد
-                    </button>
-                    <button onclick="closeModal('hafezModal')" class="w-1/2 bg-purple-600 hover:bg-purple-500 text-white text-xs py-2 rounded-xl font-semibold transition">
-                        بستن
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col max-h-[90vh]">
@@ -542,54 +459,46 @@
         const SPREADSHEET_API_URL = "https://script.google.com/macros/s/AKfycbwVCyavUmQhXQL6ilEKw96z5ouxEbHnJHq3Bo7plDyhHUip1aBDdqwm-04NpXdW3IgX/exec";
         const RESTAURANT_PHONE = "09142745054";
 
-        // دسته‌بندی‌ها (کلمه سنتی کاملاً حذف شده است و تصویر چلو به برنج اصیل زعفرانی متصل است)
+        // ۵ دسته‌بندی استاندارد (حذف دسته‌بندی خورشت‌ها + عکس دیس پلو زعفرانی مجلل)
         const CATEGORIES = [
             {
                 id: 'rice',
                 name: 'چلو و غذاهای برنجی',
-                subtitle: 'سینی مجلل چلو زعفرانی، زرشک‌پلو با مرغ، ته‌چین و کته اصیل ایرانی',
+                subtitle: 'سینی مجلل چلو مرغ زعفرانی، ته‌چین و برنج اصیل ایرانی',
                 glow: '#f59e0b',
-                image: 'https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80',
                 icon: 'fa-bowl-rice'
             },
             {
                 id: 'kebab',
                 name: 'کباب و خوراک',
-                subtitle: 'سینی کباب کوبیده مخصوص، برگ گوسفندی، جوجه و شیشلیک',
+                subtitle: 'سینی کباب کوبیده مخصوص، برگ گوسفندی و جوجه زعفرانی',
                 glow: '#ef4444',
-                image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-fire-burner'
-            },
-            {
-                id: 'stew',
-                name: 'خورشت‌ها',
-                subtitle: 'قورمه‌سبزی جاافتاده، قیمه نثار، فسنجان با رب انار اعلا',
-                glow: '#d97706',
-                image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80',
-                icon: 'fa-pot-food'
             },
             {
                 id: 'breakfast',
                 name: 'صبحانه و املت',
                 subtitle: 'املت بازاری مخصوص با نان تازه و کره محلی',
                 glow: '#fbbf24',
-                image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-egg'
             },
             {
                 id: 'drink',
                 name: 'نوشیدنی',
-                subtitle: 'دوغ محلی نعنایی، شربت زعفران، بهارنارنج و عرقیجات خنک',
+                subtitle: 'دوغ محلی نعنایی، شربت‌های اصیل و عرقیجات خنک',
                 glow: '#0ea5e9',
-                image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-glass-water'
             },
             {
                 id: 'soup',
-                name: 'سوپ و پیش‌غذا',
-                subtitle: 'سوپ جو پرک مقوی با عصاره مرغ، کشک بادمجان و آش',
+                name: 'سوپ',
+                subtitle: 'سوپ جو پرک مقوی با عصاره مرغ و لیموی تازه',
                 glow: '#f97316',
-                image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-mug-hot'
             },
             {
@@ -597,123 +506,50 @@
                 name: 'مخلفات و دورچین',
                 subtitle: 'زیتون پرورده شمال، ماست موسیر چکیده و سالاد شیرازی',
                 glow: '#10b981',
-                image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&auto=format&fit=crop&q=80',
+                image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-leaf'
             }
         ];
 
-        // منوی کامل و غنی (بدون کلمه سنتی)
+        // منوی جایگزین (فاقد خورشت‌ها)
         const FALLBACK_MENU = [
-            // چلو و غذاهای برنجی
-            { category: 'چلو و غذاهای برنجی', title: 'سینی مجمع مخصوص خان داداش (چلو زعفرانی، جوجه، خورش و ته‌چین)', price: '۵۸۰,۰۰۰', status: 'موجود' },
-            { category: 'چلو و غذاهای برنجی', title: 'زرشک پلو با مرغ مجلسی و خلال پسته', price: '۲۹۵,۰۰۰', status: 'موجود' },
-            { category: 'چلو و غذاهای برنجی', title: 'چلو کباب کوبیده زعفرانی (دو سیخ اعلا با کره)', price: '۳۸۰,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'سینی مجمع مخصوص خان داداش (چلو زعفرانی، جوجه و ته‌چین)', price: '۵۸۰,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'زرشک پلو با مرغ مجلسی و سس زعفرانی', price: '۲۹۵,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'چلو کباب کوبیده زعفرانی (دو سیخ اعلا)', price: '۳۸۰,۰۰۰', status: 'موجود' },
             { category: 'چلو و غذاهای برنجی', title: 'باقالی پلو با ماهیچه گوسفندی', price: '۶۸۵,۰۰۰', status: 'موجود' },
-            { category: 'چلو و غذاهای برنجی', title: 'ته‌چین زعفرانی ویژه با مرغ و خلال بادام', price: '۳۱۰,۰۰۰', status: 'موجود' },
-            { category: 'چلو و غذاهای برنجی', title: 'چلو جوجه کباب فیله زعفرانی', price: '۳۲۰,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'ته‌چین زعفرانی با مرغ و خلال پسته', price: '۳۱۰,۰۰۰', status: 'موجود' },
 
-            // کباب و خوراک
             { category: 'کباب و خوراک', title: 'کباب برگ گوسفندی ممتاز', price: '۵۹۰,۰۰۰', status: 'موجود' },
-            { category: 'کباب و خوراک', title: 'جوجه کباب با استخوان طعم‌دار زعفرانی', price: '۳۲۰,۰۰۰', status: 'موجود' },
+            { category: 'کباب و خوراک', title: 'جوجه کباب زعفرانی با استخوان', price: '۳۲۰,۰۰۰', status: 'موجود' },
             { category: 'کباب و خوراک', title: 'کباب لقمه نگین‌دار مخصوص', price: '۳۶۰,۰۰۰', status: 'موجود' },
-            { category: 'کباب و خوراک', title: 'کباب شیشلیک مخصوص گوسفندی', price: '۶۹۰,۰۰۰', status: 'موجود' },
-            { category: 'کباب و خوراک', title: 'خوراک شنیسل مرغ با دورچین سبزیجات', price: '۲۴۰,۰۰۰', status: 'موجود' },
+            { category: 'کباب و خوراک', title: 'خوراک شنیسل مرغ با دورچین', price: '۲۴۰,۰۰۰', status: 'موجود' },
 
-            // خورشت‌ها
-            { category: 'خورشت‌ها', title: 'چلو خورش قورمه‌سبزی جاافتاده با گوشت تازه', price: '۲۷۰,۰۰۰', status: 'موجود' },
-            { category: 'خورشت‌ها', title: 'چلو خورش قیمه بادمجان با لیمو عمانی اعلا', price: '۲۶۰,۰۰۰', status: 'موجود' },
-            { category: 'خورشت‌ها', title: 'چلو خورش فسنجان ملس با گردوی فراوان', price: '۳۳۰,۰۰۰', status: 'موجود' },
+            { category: 'صبحانه و املت', title: 'املت گوجه‌فرنگی بازاری با نان سنگک تازه', price: '۱۴۰,۰۰۰', status: 'موجود' },
+            { category: 'صبحانه و املت', title: 'سینی صبحانه ایرانی خان داداش (پنیر، عسل، سرشیر، گردو)', price: '۲۲۰,۰۰۰', status: 'موجود' },
+            { category: 'صبحانه و املت', title: 'نیمرو با کره محلی', price: '۹۵,۰۰۰', status: 'موجود' },
 
-            // صبحانه و املت
-            { category: 'صبحانه و املت', title: 'املت گوجه‌فرنگی بازاری با نان تازه و پیاز', price: '۱۴۰,۰۰۰', status: 'موجود' },
-            { category: 'صبحانه و املت', title: 'املت سوسیس گوشت و قارچ با پنیر', price: '۱۷۵,۰۰۰', status: 'موجود' },
-            { category: 'صبحانه و املت', title: 'سینی صبحانه ایرانی خان داداش (عسل، سرشیر، پنیر، گردو)', price: '۲۲۰,۰۰۰', status: 'موجود' },
-            { category: 'صبحانه و املت', title: 'نیمرو با کره محلی و نان داغ', price: '۹۵,۰۰۰', status: 'موجود' },
+            { category: 'سوپ', title: 'سوپ جو خامه‌ای مخصوص سرآشپز', price: '۹۵,۰۰۰', status: 'موجود' },
+            { category: 'سوپ', title: 'سوپ ورمیشل و مرغ ویژه', price: '۸۵,۰۰۰', status: 'موجود' },
 
-            // سوپ و پیش‌غذا
-            { category: 'سوپ و پیش‌غذا', title: 'سوپ جو قرمز مجلسی سرآشپز با آبلیمو تازه', price: '۹۵,۰۰۰', status: 'موجود' },
-            { category: 'سوپ و پیش‌غذا', title: 'کشک بادمجان برشته با نعناداغ و گردو', price: '۱۶۵,۰۰۰', status: 'موجود' },
-            { category: 'سوپ و پیش‌غذا', title: 'آش رشته مخصوص با حبوبات کامل و پیازداغ', price: '۱۱۰,۰۰۰', status: 'موجود' },
+            { category: 'مخلفات و دورچین', title: 'زیتون پرورده اصیل شمالی', price: '۷۵,۰۰۰', status: 'موجود' },
+            { category: 'مخلفات و دورچین', title: 'ماست موسیر کوزه‌ای چکیده', price: '۶۵,۰۰۰', status: 'موجود' },
+            { category: 'مخلفات و دورچین', title: 'سالاد شیرازی با آبغوره عسگری', price: '۵۵,۰۰۰', status: 'موجود' },
 
-            // مخلفات و دورچین
-            { category: 'مخلفات و دورچین', title: 'زیتون پرورده اصیل با چوچاق و رب انار خالص', price: '۷۵,۰۰۰', status: 'موجود' },
-            { category: 'مخلفات و دورچین', title: 'ماست موسیر کوزه‌ای چکیده پرچرب', price: '۶۵,۰۰۰', status: 'موجود' },
-            { category: 'مخلفات و دورچین', title: 'سالاد شیرازی با آبغوره عسگری خانگی', price: '۵۵,۰۰۰', status: 'موجود' },
-            { category: 'مخلفات و دورچین', title: 'سیرترشی هفت‌ساله خوش‌طعم', price: '۵۰,۰۰۰', status: 'موجود' },
-
-            // نوشیدنی
-            { category: 'نوشیدنی', title: 'دوغ محلی مشک با عطر پودر گل‌محمدی و نعنا', price: '۴۵,۰۰۰', status: 'موجود' },
-            { category: 'نوشیدنی', title: 'شربت زعفران قائنات و تخم شربتی خنک', price: '۶۵,۰۰۰', status: 'موجود' },
-            { category: 'نوشیدنی', title: 'شربت بهارنارنج و بیدمشک', price: '۶۰,۰۰۰', status: 'موجود' },
-            { category: 'نوشیدنی', title: 'نوشابه قوطی خنک (کوکاکولا، زیرو، فانتا)', price: '۳۵,۰۰۰', status: 'موجود' }
+            { category: 'نوشیدنی', title: 'دوغ محلی مشک نعنایی و گل‌محمدی', price: '۴۵,۰۰۰', status: 'موجود' },
+            { category: 'نوشیدنی', title: 'شربت زعفران و تخم شربتی خنک', price: '۶۵,۰۰۰', status: 'موجود' },
+            { category: 'نوشیدنی', title: 'موهیتو دست‌ساز تازه', price: '۷۵,۰۰۰', status: 'موجود' }
         ];
 
-        // 8-Question Challenge Pool
-        const QUIZ_QUESTIONS = [
-            {
-                id: 1,
-                category: "هوش و منطق",
-                question: "سه جعبه با برچسب‌های «سیب»، «پرتقال» و «مخلوط» وجود دارند. تمام برچسب‌ها اشتباه‌اند. با برداشتن تنها یک میوه از یک جعبه، از کدام جعبه باید شروع کرد؟",
-                options: ["جعبه سیب", "جعبه پرتقال", "جعبه مخلوط", "فرقی ندارد"],
-                answer: "جعبه مخلوط",
-                explanation: "چون برچسب مخلوط اشتباه است، این جعبه فقط یک نوع میوه دارد. با دیدن آن، دو جعبه دیگر نیز مشخص می‌شوند."
-            },
-            {
-                id: 2,
-                category: "هوش و ریاضی",
-                question: "اگر ۵ ماشین در ۵ دقیقه، ۵ قطعه تولید کنند، ۱۰۰ ماشین در ۵ دقیقه چند قطعه تولید می‌کنند؟",
-                options: ["۲۰", "۵۰", "۱۰۰", "۵۰۰"],
-                answer: "۱۰۰",
-                explanation: "هر ماشین در ۵ دقیقه ۱ قطعه می‌سازد؛ پس ۱۰۰ ماشین نیز در ۵ دقیقه ۱۰۰ قطعه می‌سازند."
-            },
-            {
-                id: 3,
-                category: "هوش و دنباله",
-                question: "عدد بعدی در دنباله ۱، ۲، ۶، ۲۴، ۱۲۰ چیست؟",
-                options: ["۲۴۰", "۳۶۰", "۶۰۰", "۷۲۰"],
-                answer: "۷۲۰",
-                explanation: "اعداد به‌ترتیب در ۲، ۳، ۴، ۵ و سپس در ۶ ضرب می‌شوند."
-            },
-            {
-                id: 4,
-                category: "هوش و معما",
-                question: "در یک مسابقه از نفر دوم سبقت می‌گیرید. اکنون در چه جایگاهی هستید؟",
-                options: ["اول", "دوم", "سوم", "چهارم"],
-                answer: "دوم",
-                explanation: "شما جایگاه نفر دوم را تصاحب کرده‌اید، نه نفر اول را."
-            },
-            {
-                id: 5,
-                category: "اطلاعات عمومی",
-                question: "کدام شهر باستانی به شهر هفت تپه معروف است؟",
-                options: ["آتن", "رم", "پاریس", "مادرید"],
-                answer: "رم",
-                explanation: "رم باستان بر روی هفت تپه بنا شده است."
-            },
-            {
-                id: 6,
-                category: "غذا و آشپزی",
-                question: "کدام ادویه از کلاله گل به دست می‌آید و به طلای سرخ معروف است؟",
-                options: ["هل", "زعفران", "دارچین", "زنجبیل"],
-                answer: "زعفران",
-                explanation: "زعفران از کلاله‌های گل زعفران چیده می‌شود."
-            },
-            {
-                id: 7,
-                category: "علم و طبیعت",
-                question: "فراوان‌ترین عنصر شیمیایی در پوسته کره زمین چیست؟",
-                options: ["آهن", "سیلیسیم", "اکسیژن", "آلومینیوم"],
-                answer: "اکسیژن",
-                explanation: "اکسیژن بیشترین سهم جرمی را در پوسته زمین داراست."
-            },
-            {
-                id: 8,
-                category: "سینما",
-                question: "کدام فیلم به کارگردانی کریستوفر نولان درباره ورود به لایه‌های خواب است؟",
-                options: ["Interstellar", "Inception", "Memento", "Dunkirk"],
-                answer: "Inception",
-                explanation: "فیلم اینسپشن (تلقین) به لایه‌های رویا و ضمیر ناخودآگاه می‌پردازد."
-            }
+        // سوالات پشتیبان اضطراری در صورت عدم دسترسی به فایل json
+        const BACKUP_QUIZ_QUESTIONS = [
+            { question: "سه جعبه با برچسب‌های «سیب»، «پرتقال» و «مخلوط» وجود دارند. تمام برچسب‌ها اشتباه‌اند. از کدام جعبه یک میوه برداریم؟", options: ["جعبه سیب", "جعبه پرتقال", "جعبه مخلوط", "فرقی ندارد"], answer: "جعبه مخلوط", explanation: "چون برچسب مخلوط اشتباه است، این جعبه فقط یک نوع میوه دارد." },
+            { question: "اگر ۵ ماشین در ۵ دقیقه ۵ قطعه بسازند، ۱۰۰ ماشین در ۵ دقیقه چند قطعه می‌سازند؟", options: ["۲۰", "۵۰", "۱۰۰", "۵۰۰"], answer: "۱۰۰", explanation: "هر ماشین در ۵ دقیقه یک قطعه تولید می‌کند." },
+            { question: "عدد بعدی در دنباله ۱، ۲، ۶، ۲۴، ۱۲۰ چیست؟", options: ["۲۴۰", "۳۶۰", "۶۰۰", "۷۲۰"], answer: "۷۲۰", explanation: "اعداد در ۲، ۳، ۴، ۵ و سپس ۶ ضرب می‌شوند." },
+            { question: "در یک مسابقه از نفر دوم سبقت می‌گیرید. اکنون در چه جایگاهی هستید؟", options: ["اول", "دوم", "سوم", "چهارم"], answer: "دوم", explanation: "شما جایگاه نفر دوم را تصاحب کرده‌اید." },
+            { question: "کدام ادویه از کلاله گل به دست می‌آید و به طلای سرخ معروف است؟", options: ["هل", "زعفران", "دارچین", "زنجبیل"], answer: "زعفران", explanation: "زعفران از کلاله‌های گل زعفران چیده می‌شود." },
+            { question: "فراوان‌ترین عنصر شیمیایی در پوسته کره زمین چیست؟", options: ["آهن", "سیلیسیم", "اکسیژن", "آلومینیوم"], answer: "اکسیژن", explanation: "اکسیژن بیشترین سهم جرمی را در پوسته زمین داراست." },
+            { question: "شاعر کتاب حماسی «شاهنامه» کیست؟", options: ["نظامی", "فردوسی", "مولوی", "سعدی"], answer: "فردوسی", explanation: "ابوالقاسم فردوسی سراینده شاهنامه است." },
+            { question: "در اتاق تاریک، شمع، چراغ نفتی و بخاری دارید. فقط یک کبریت دارید، اول کدام را روشن می‌کنید؟", options: ["شمع", "چراغ نفتی", "بخاری", "کبریت"], answer: "کبریت", explanation: "برای روشن کردن هر کدام، ابتدا باید خود کبریت روشن شود." }
         ];
 
         // Global State
@@ -722,7 +558,22 @@
         let searchQuery = '';
         let onlyAvailable = false;
         let cart = [];
+        let fullQuizBank = [];
 
+        // بارگذاری خودکار تمام ۳۳۰ سوال از فایل quiz.json
+        async function fetchQuizBank() {
+            try {
+                const res = await fetch('quiz.json?t=' + Date.now());
+                if (res.ok) {
+                    fullQuizBank = await res.json();
+                }
+            } catch (err) {
+                console.info('Quiz fallback used.');
+            }
+        }
+        fetchQuizBank();
+
+        // Audio Helper
         function playSimpleTone(freq, duration = 0.12) {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -748,6 +599,7 @@
             pills.innerHTML = '';
 
             CATEGORIES.forEach((cat, idx) => {
+                // Carousel Card
                 const card = document.createElement('div');
                 card.id = `plate-card-${idx}`;
                 card.className = 'plate-card';
@@ -764,6 +616,7 @@
                 `;
                 track.appendChild(card);
 
+                // Pill Button
                 const pill = document.createElement('button');
                 pill.id = `cat-pill-${idx}`;
                 pill.className = `px-3 py-1.5 rounded-xl text-xs font-semibold transition border flex items-center gap-1.5 ${
@@ -834,7 +687,7 @@
         }
 
         function normalizeStr(s) {
-            return (s || '').toString().trim().replace(/[​-‍﻿]/g, '').toLowerCase();
+            return (s || '').toString().trim().replace(/[\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         }
 
         function renderMenu() {
@@ -854,8 +707,6 @@
                 } else if (normActive.includes('چلو') && (itemCat.includes('برنج') || itemCat.includes('چلو') || itemCat.includes('پلو'))) {
                     catMatch = true;
                 } else if (normActive.includes('کباب') && (itemCat.includes('کباب') || itemCat.includes('خوراک'))) {
-                    catMatch = true;
-                } else if (normActive.includes('خورشت') && itemCat.includes('خورش')) {
                     catMatch = true;
                 } else if (normActive.includes('صبحانه') && (itemCat.includes('صبحانه') || itemCat.includes('املت'))) {
                     catMatch = true;
@@ -906,7 +757,7 @@
                                 <span class="text-xs sm:text-sm font-bold text-amber-400 mr-1">${priceClean}</span>
                                 <span class="text-[10px] text-slate-400">تومان</span>
                             </div>
-                            <button onclick="addToCart('${item.title.replace(/'/g, "\'")}', '${priceClean}', ${isAvail})"
+                            <button onclick="addToCart('${item.title.replace(/'/g, "\\'")}', '${priceClean}', ${isAvail})"
                                     class="${isAvail ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 active:scale-95' : 'bg-slate-800 text-slate-500 cursor-not-allowed'} px-3 py-1 rounded-xl text-xs font-bold transition flex items-center gap-1"
                                     ${!isAvail ? 'disabled' : ''}>
                                 <i class="fa-solid fa-plus text-[10px]"></i>
@@ -1033,7 +884,7 @@
             window.location.href = `sms:${RESTAURANT_PHONE}?body=${encodeURIComponent(msg)}`;
         }
 
-        // ================= QUIZ LOGIC =================
+        // ================= QUIZ LOGIC (انتخاب کاملاً تصادفی از کل ۳۳۰ سوال) =================
         let activeQuiz = [];
         let currentQuizIdx = 0;
         let quizTimer = null;
@@ -1041,7 +892,8 @@
         let quizAccepting = true;
 
         function startQuizChallenge() {
-            const shuffled = [...QUIZ_QUESTIONS].sort(() => 0.5 - Math.random());
+            const pool = (fullQuizBank && fullQuizBank.length >= 8) ? fullQuizBank : BACKUP_QUIZ_QUESTIONS;
+            const shuffled = [...pool].sort(() => 0.5 - Math.random());
             activeQuiz = shuffled.slice(0, 8);
             currentQuizIdx = 0;
             quizAccepting = true;
@@ -1069,7 +921,7 @@
 
             const container = document.getElementById('quizOptionsContainer');
             container.innerHTML = q.options.map(opt => `
-                <button onclick="answerQuiz('${opt.replace(/'/g, "\'")}', this)" 
+                <button onclick="answerQuiz('${opt.replace(/'/g, "\\'")}', this)" 
                         class="quiz-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-right text-xs font-medium text-slate-200 transition">
                     ${opt}
                 </button>
@@ -1280,214 +1132,6 @@
             }
         }
 
-        // ================= HAFEZ DIVAN =================
-        let currentIntention = 'general';
-        let hafezRemoteData = null;
-        let recentOmenHistory = { career: [], love: [], decision: [], general: [] };
-
-        async function preloadHafezJson() {
-            try {
-                const res = await fetch('hafez.json?t=' + Date.now());
-                if (res.ok) {
-                    hafezRemoteData = await res.json();
-                }
-            } catch (err) {
-                console.info('Using embedded rich Hafez treasury.');
-            }
-        }
-        preloadHafezJson();
-
-        function selectIntention(type, btn) {
-            currentIntention = type;
-            document.querySelectorAll('.intent-pill').forEach(b => {
-                b.className = 'intent-pill bg-slate-800 border border-purple-500/20 text-slate-300 text-xs p-2 rounded-xl transition';
-            });
-            btn.className = 'intent-pill active bg-purple-600/40 border border-purple-400 text-purple-200 text-xs p-2 rounded-xl transition font-bold shadow-md';
-        }
-
-        const HAFEZ_TREASURY = {
-            career: [
-                {
-                    num: 'غزل شماره ۱۶۷ (کاری و مالی)',
-                    poem: 'ستاره‌ای بدرخشد و ماه مجلس شد\nدل رمیده ما را رفیق و همدم شد\nنگار من که به مکتب نرفت و خط ننوشت\nبه غمزه مسئله‌آموز صد مدرس شد\nبه بوی او ز دو عالم طمع ببریدم\nچو دولت سر کویش نصیب و مقسم شد',
-                    theme: 'گشایش غیرمنتظره، رونق اقتصادی و شکوفایی استعدادهای پنهان.',
-                    interpretation: 'در امور کاری و معیشت، بخت و اقبالی کم‌نظیر به سراغ شما خواهد آمد. ایده‌ای که کوچک می‌پنداشتید یا شراکتی که آغاز کرده‌اید، ثمره‌ای فراتر از تصورتان خواهد داشت. از ارتباطات تازه و مشورت افراد با‌تجربه بهره بگیرید.',
-                    wisdom: '«گاهی بزرگ‌ترین گره‌های کاری، با ساده‌ترین و خالص‌ترین تدبیرها باز می‌شوند.»'
-                },
-                {
-                    num: 'غزل شماره ۲۳۱ (تلاش و تجارت)',
-                    poem: 'گفتم غم تو دارم گفتا غمت سر آید\nگفتم که ماه من شو گفتا اگر برآید\nگفتم ز مهرورزان رسم وفا بیاموز\nگفتا ز خوبرویان این کار کمتر آید\nگفتم زمان عشرت دیدی که چون سر آمد\nگفتا خموش حافظ کاین غصه هم سر آید',
-                    theme: 'پایان دوران رکود، وصول مطالبات و ثمردهی شکیبایی در بازار.',
-                    interpretation: 'سختی‌ها و تاخیرهای مالی رو به پایان است. اگر صبور باشید و دست از کوشش مستمر برندارید، به زودی گردش مالی مثبتی حاصل می‌شود. از تصمیم‌های شتاب‌زده بپرهیزید و به عهد خود پایبند بمانید.',
-                    wisdom: '«پایان شب سیه سپید است؛ ناامیدی آفت پیشرفت و تجارت است.»'
-                },
-                {
-                    num: 'غزل شماره ۴۴ (فرصت سرمایه‌گذاری)',
-                    poem: 'کنون که در چمن آمد گل از عدم به وجود\nبنفشه در قدم او نهاد سر به سجود\nبنوش جام صبوحی به ناله دف و چنگ\nببوس غبغب ساقی به نغمه نی و عود\nبه دور گل منشین بی‌شراب و شاهد و چنگ\nکه همچو روز بقا هفته‌ای بود معدود',
-                    theme: 'فرا رسیدن فصل بهره‌وری، سودآوری و آغاز پروژه‌های تازه.',
-                    interpretation: 'فصل برداشت زحمات شغلی شما فرارسیده است. قراردادی معطل‌مانده یا ایده‌ای که روی آن سرمایه‌گذاری کرده‌اید به بار می‌نشیند؛ زمان عمل و گسترش هوشمندانه کار فرارسیده است.',
-                    wisdom: '«غنیمت شمردن زمان و سرعت عمل، رمز کامیابی در بازار است.»'
-                },
-                {
-                    num: 'غزل شماره ۱۳۶ (همت و پشتکار)',
-                    poem: 'دست از طلب ندارم تا کام من برآید\nیا تن رسد به جانان یا جان ز تن برآید\nبگشای تربتم را بعد از وفات و بنگر\nکز آتش درونم دود از کفن برآید\nبنمای رخ که خلقی واله شوند و حیران\nبگشای لب که فریاد از مرد و زن برآید',
-                    theme: 'عزم پولادین، استقامت در برابر بحران و دستیابی به سود کلان.',
-                    interpretation: 'پشتکار شما در پیگیری هدف شغلی ستودنی است. با مواجهه با موانع اداری یا مالی عقب‌نشینی نکنید؛ تسلیم نشدن تنها رمزی است که سود پایدار و اعتبار حرفه‌ای را به همراه می‌آورد.',
-                    wisdom: '«ثبات قدم و پیگیری مداوم، درهای بسته بازار را باز می‌کند.»'
-                },
-                {
-                    num: 'غزل شماره ۳۲ (برکت و رضایت)',
-                    poem: 'در این بازار اگر سودیست با درویش خرسند است\nخدایا منعمم گردان به درویشی و خرسندی\nبه هوش باش دلا کاندرین بساط هوس\nچو زر نباشی از این سیم‌گون جهان چه‌بری\nکمال سرّ محبت ببین نه نقص گناه\nکه هر که بی‌هنر افتد نظر به عیب کند',
-                    theme: 'انصاف در معامله، قناعت برکت‌آفرین و آرامش در دادوستد.',
-                    interpretation: 'سود واقعی زمانی به دست می‌آید که انصاف، سلامت کاری و رضایت وجدان را در اولویت قرار دهید. از طمع و ریسک‌های مبهم دوری کنید؛ شراکتی پاک و خوش‌نامی بزرگ‌ترین سرمایه شماست.',
-                    wisdom: '«برکت مال در درستی و اعتدال است، نه در سودهای مشکوک و پرشتاب.»'
-                }
-            ],
-            love: [
-                {
-                    num: 'غزل شماره ۱ (شور دل و عاشقی)',
-                    poem: 'الا یا ایها الساقی ادر کأسا و ناولها\nکه عشق آسان نمود اول ولی افتاد مشکل‌ها\nبه بوی نافه‌ای کاخر صبا زان طره بگشاید\nز تاب جعد مشکینش چه خون افتاد در دل‌ها\nشب تاریک و بیم موج و گردابی چنین هایل\nکجا دانند حال ما سبکباران ساحل‌ها',
-                    theme: 'آزمون عشق، مدارا در برابر تلاطم‌ها و پایداری دلدادگی.',
-                    interpretation: 'مسیری پرشور و عمیق پیش روی شماست. سوءتفاهم‌های اخیر ناشی از اضطراب‌های گذراست. با صبوری، گذشت و ابراز صادقانه مهر، تلاطم‌ها فرومی‌نشیند و آرامش به رابطه بازمی‌گردد.',
-                    wisdom: '«عشق راستین در بوته صبوری و مدارا به عیار کمال می‌رسد.»'
-                },
-                {
-                    num: 'غزل شماره ۲۴۴ (دیدار و همدلی)',
-                    poem: 'معاشران گره از زلف یار باز کنید\nشبی خوش است بدین قصه‌اش دراز کنید\nحضور مجلس انس است و دوستان جمعند\nو ان یکاد بخوانید و در فراز کنید\nبه جان دوست که غم پرده بر شما ندرد\nگر اعتماد بر الطاف کارساز کنید',
-                    theme: 'پایان فراق، روشنی چشم و صمیمیت دوباره قلوب.',
-                    interpretation: 'دوران دلتنگی و دوری رو به پایان است. فضایی سرشار از درک متقابل و همدلی گشوده خواهد شد. غرور و گلایه‌های کهنه را دور بریزید تا نسیم وصل در زندگی‌تان بوزد.',
-                    wisdom: '«کینه و بدگمانی را از سینه برانید تا خانه دل آباد شود.»'
-                },
-                {
-                    num: 'غزل شماره ۳۱۸ (گفتگوی صریح و رفع شک)',
-                    poem: 'مرا می‌بینی و هردم زیادت می‌کنی دردم\nتو را می‌بینم و میلم زیادت می‌شود هر دم\nبه سامانم نمی‌پرسی نمی‌دانم چه سر داری\nبه درمانم نمی‌کوشی نمی‌دانی مگر دردم\nنه راه است این که بگذاری مرا بر خاک و بگریزی\nبیا بنشین دمی با من که عمری با غمت سر بردم',
-                    theme: 'لزوم گفتگوی آرام، شفاف‌سازی احساسات و رفع ابهام.',
-                    interpretation: 'نگذارید فاصله‌ها و حرف‌های ناگفته موجب کدورت شوند. با کلامی گرم و در فرصتی مناسب انتظارات خود را با محبوب در میان بگذارید؛ صداقت قلب‌ها را به هم پیوند می‌دهد.',
-                    wisdom: '«سکوت و غرور بی‌جا، رخنه‌های کوچک را تبدیل به دیوارهای بلند می‌کند.»'
-                },
-                {
-                    num: 'غزل شماره ۴۱۱ (وفاداری و پیمان مهر)',
-                    poem: 'تاب بنفشه می‌دهد طره مشک‌سای تو\nپرده غنچه می‌درد خنده دلگشای تو\nای گل خوش نسیم من بلبل خویش را مسوز\nکز سر صدق می‌کند شب همه شب دعای تو\nمن که ملول گشتمی از نفس فرشتگان\nقال و مقال عالمی می‌کشم از برای تو',
-                    theme: 'استواری عهد، اعتماد دوجانبه و خوش‌فرجامی رابطه.',
-                    interpretation: 'نیت قلبی شما فرجامی درخشان دارد. پیوندی که بر صداقت و پاکی نیت بنا شده باشد، در گذر روزگار پایدار خواهد ماند. به آینده با دلی گرم و پرامید بنگرید.',
-                    wisdom: '«وفای به عهد، ارزنده‌ترین خصلت در پیوندهای انسانی است.»'
-                }
-            ],
-            decision: [
-                {
-                    num: 'غزل شماره ۱۸۴ (توکل و انتخاب قطعی)',
-                    poem: 'دوش دیدم که ملایک در میخانه زدند\nگل آدم بسرشتند و به پیمانه زدند\nساکنان حرم ستر و عفاف ملکوت\nبا من راه نشین باده مستانه زدند\nشکر ایزد که میان من و او صلح افتاد\nصوفیان رقص‌کنان ساغر شکرانه زدند',
-                    theme: 'رفع دودلی، انتخاب مسیر امن و توکل بر خداوند.',
-                    interpretation: 'در این دوراهی، راهی را برگزینید که آرامش باطنی و وجدان شما آن را تصدیق می‌کند. شک و تردید را کنار بگذارید و با توکل گام در راه بگذارید؛ نصرت و همراهی خیر در این مسیر است.',
-                    wisdom: '«چون بر کاری سنجیده عزم نمودی، به خداوند توکل کن و از سرزنش‌ها مهراس.»'
-                },
-                {
-                    num: 'غزل شماره ۲۲۶ (شکیبایی در تصمیم)',
-                    poem: 'گویند سنگ لعل شود در مقام صبر\nآری شود ولیک به خون جگر شود\nخواهم شدن به میکده گریان و دادخواه\nکز دست غم خلاص من آن جا مگر شود\nاز هر کرانه تیر دعا کرده‌ام روان\nباشد کز آن میانه یکی کارگر شود',
-                    theme: 'پرهیز از عجله، زمان‌سنجی و بررسی دقیق جزئیات.',
-                    interpretation: 'شتاب در این تصمیم جایز نیست. چند روزی به خود مهلت دهید تا زوایای پنهان ماجرا برایتان آشکار گردد. تصمیمی که بر پایه آرامش و طمأنینه اتخاذ شود ماندگار خواهد بود.',
-                    wisdom: '«صبر چند روزه در تصمیم، مانع پشیمانی‌های طولانی خواهد شد.»'
-                },
-                {
-                    num: 'غزل شماره ۴۹۰ (مشورت با اهل خرد)',
-                    poem: 'در همه دیر مغان نیست چو من شیدایی\nخرقه جایی گرو باده و دفتر جایی\nدل که آیینه شاهی است غباری دارد\nاز خدا می‌طلبم صحبت روشن رایی\nکشتی باده بیاور که مرا بی رخ دوست\nگشت هر گوشه چشم از غم دل دریایی',
-                    theme: 'استفاده از تجربه دیگران و دوری از تعصب فردی.',
-                    interpretation: 'پیش از تصمیم نهایی، با فردی دلسوز، با‌تجربه و بی‌طرف همفکری کنید. نگاه از زاویه‌ای نو، راهکار بسیار ساده‌تر و روشن‌تری را در اختیارتان خواهد گذاشت.',
-                    wisdom: '«مشورت، چراغ راهنمای عاقلان در گذرگاه‌های پرپیچ‌وخم است.»'
-                }
-            ],
-            general: [
-                {
-                    num: 'غزل شماره ۲۵۵ (امید و دگرگونی احوال)',
-                    poem: 'یوسف گمگشته بازآید به کنعان غم مخور\nکلبه احزان شود روزی گلستان غم مخور\nای دل غمدیده حالت به شود دل بد مکن\nوین سر شوریده بازآید به سامان غم مخور\nدور گردون گر دو روزی بر مراد ما نرفت\nدائما یکسان نباشد حال دوران غم مخور',
-                    theme: 'بشارت فرج، رفع اندوه و دگرگونی روزگار به سوی بهروزی.',
-                    interpretation: 'اندوه و دلتنگی که این روزها بر خاطرتان نشسته پایدار نخواهد بود. چرخش ایام به زودی اوضاع را بر وفق مراد شما سامان می‌دهد. امید خود را حفظ کنید و با روی گشاده به استقبال فردا بروید.',
-                    wisdom: '«دائما یکسان نباشد حال دوران غم مخور؛ این نوید الهی را آویزه جان کن.»'
-                },
-                {
-                    num: 'غزل شماره ۱۱۵ (دوستی و آرامش روح)',
-                    poem: 'درخت دوستی بنشان که کام دل به بار آرد\nنهال دشمنی برکن که رنج بی‌شمار آرد\nشب صحبت غنیمت دان که بعد از روزگار ما\nبسی گردش کند گردون بسی لیل و نهار آرد\nعماری دار لیلی را که مهد ماه در حکم است\nخدا را در دل اندازش که بر مجنون گذار آرد',
-                    theme: 'تحکیم پیوندهای انسانی، گذشت و صلح درونی.',
-                    interpretation: 'آرامش شما در گرو رفع دلخوری‌ها و گشاده‌رویی با اطرافیان است. کینه‌ها را از دل برانید و در مدار صمیمیت گام بردارید؛ روزگار پاداش این مهربانی را به زیبایی خواهد داد.',
-                    wisdom: '«درخت دوستی بنشان که کام دل به بار آرد؛ نهال دشمنی برکن که رنج بی‌شمار آرد.»'
-                },
-                {
-                    num: 'غزل شماره ۴۸۸ (مژده سحری و نشاط)',
-                    poem: 'سحرم دولت بیدار به بالین آمد\nگفت برخیز که آن خسرو شیرین آمد\nقدحی درکش و سرخوش به تماشا بخرام\nتا ببینی که نگارت به چه آیین آمد\nمژدگانی بده ای خلوتی نافه گشای\nکه ز صحرای ختن آهوی مشکین آمد',
-                    theme: 'خبر خوش، رفع نگرانی‌ها و گشوده شدن افق‌های نو.',
-                    interpretation: 'بخت و اقبال به سراغ شما آمده است. خبری مسرت‌بخش دل شما را شادمان خواهد ساخت و خستگی روزهای دشوار از روانتان رخت برمی‌بندد. شاکر نعمت‌های پروردگار باشید.',
-                    wisdom: '«شکر نعمت، درهای گشایش و برکت افزون‌تر را به رویتان می‌گشاید.»'
-                }
-            ]
-        };
-
-        function pickUniqueFortune(intentKey) {
-            const jsonKey = (intentKey === 'career') ? 'work' : intentKey;
-            let pool = [];
-
-            if (hafezRemoteData) {
-                if (Array.isArray(hafezRemoteData[jsonKey]) && hafezRemoteData[jsonKey].length > 0) {
-                    pool = hafezRemoteData[jsonKey].map(item => ({
-                        num: item.title || `غزل شماره ${item.ghazalNumber || item.id}`,
-                        poem: Array.isArray(item.verses) ? item.verses.join('\n') : (item.verses || item.poem || ''),
-                        theme: 'الهام‌گرفته از حکمت خواجه شیراز متناسب با نیت قلبی شما.',
-                        interpretation: item.interpretation || item.interp || '',
-                        wisdom: item.wisdom ? `«${item.wisdom}»` : '«صبر و توکل کلید گشایش امور است.»'
-                    }));
-                } else if (Array.isArray(hafezRemoteData[intentKey]) && hafezRemoteData[intentKey].length > 0) {
-                    pool = hafezRemoteData[intentKey].map(item => ({
-                        num: item.title || `غزل شماره ${item.ghazalNumber || item.id}`,
-                        poem: Array.isArray(item.verses) ? item.verses.join('\n') : (item.verses || item.poem || ''),
-                        theme: 'الهام‌گرفته از حکمت خواجه شیراز متناسب با نیت قلبی شما.',
-                        interpretation: item.interpretation || item.interp || '',
-                        wisdom: item.wisdom ? `«${item.wisdom}»` : '«صبر و توکل کلید گشایش امور است.»'
-                    }));
-                }
-            }
-
-            if (!pool || pool.length === 0) {
-                pool = HAFEZ_TREASURY[intentKey] || HAFEZ_TREASURY.general;
-            }
-
-            if (!recentOmenHistory[intentKey]) recentOmenHistory[intentKey] = [];
-            let unread = pool.filter(f => !recentOmenHistory[intentKey].includes(f.num));
-            if (unread.length === 0) {
-                recentOmenHistory[intentKey] = [];
-                unread = pool;
-            }
-
-            const chosen = unread[Math.floor(Math.random() * unread.length)];
-            recentOmenHistory[intentKey].push(chosen.num);
-            if (recentOmenHistory[intentKey].length > 15) {
-                recentOmenHistory[intentKey].shift();
-            }
-
-            return chosen;
-        }
-
-        async function takeFaal() {
-            document.getElementById('hafezInitialView').classList.add('hidden');
-            document.getElementById('hafezResultView').classList.remove('hidden');
-
-            const intentNames = {
-                general: 'احوال کلی و سرنوشت',
-                love: 'عاشقانه و دل',
-                career: 'کاری و مالی',
-                decision: 'دوراهی و تصمیم'
-            };
-            document.getElementById('hafezIntentBadge').innerText = intentNames[currentIntention];
-            document.getElementById('hafezIntentHeader').innerText = `تعبیر متناسب با (${intentNames[currentIntention]}):`;
-
-            const fortune = pickUniqueFortune(currentIntention);
-            document.getElementById('hafezGhazalNumber').innerText = fortune.num;
-            document.getElementById('hafezPoem').innerText = fortune.poem;
-            document.getElementById('hafezCoreTheme').innerText = fortune.theme;
-            document.getElementById('hafezIntentInterpretation').innerText = fortune.interpretation;
-            document.getElementById('hafezWisdom').innerText = fortune.wisdom;
-
-            playSimpleTone(550, 0.12);
-        }
-
         // ================= UTILITIES =================
         function openModal(id) {
             const m = document.getElementById(id);
@@ -1534,6 +1178,7 @@
             showToast(`کد «${text}» کپی شد!`, 'success');
         }
 
+        // Fetch Live Google Sheets with Cache-Busting & Safe Fallback
         async function loadSheetData() {
             try {
                 const url = `${SPREADSHEET_API_URL}?t=${Date.now()}`;
@@ -1551,6 +1196,7 @@
             }
         }
 
+        // Initialize on Load
         window.addEventListener('DOMContentLoaded', () => {
             initCarousel();
             renderMenu();
@@ -1562,4 +1208,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
