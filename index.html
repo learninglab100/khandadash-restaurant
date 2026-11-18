@@ -165,6 +165,7 @@
                     <span class="hidden sm:inline">حافظه تصویری</span>
                     <span class="sm:hidden">بازی</span>
                 </button>
+                
                 <button onclick="openCartModal()" class="relative flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-3 py-2 rounded-xl text-xs md:text-sm font-medium transition">
                     <i class="fa-solid fa-bag-shopping text-orange-400"></i>
                     <span id="cartCountBadge" class="absolute -top-1.5 -left-1.5 bg-orange-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">۰</span>
@@ -223,7 +224,7 @@
                 چلو و غذاهای برنجی
             </h2>
             <p id="activeCategoryDesc" class="text-xs md:text-sm text-slate-400 max-w-md mx-auto mt-1">
-                سینی مجلل چلو مرغ زعفرانی، ته‌چین و برنج اصیل ایرانی
+                سینی مجلل چلو مرغ زعفرانی، ته‌چین، خورش و برنج اصیل ایرانی
             </p>
         </div>
 
@@ -295,6 +296,8 @@
             </div>
         </div>
     </footer>
+
+    <!-- ==================== MODALS ==================== -->
 
     <!-- Quiz Modal -->
     <div id="quizModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3">
@@ -409,6 +412,9 @@
         </div>
     </div>
 
+    
+    </div>
+
     <!-- Cart Modal -->
     <div id="cartModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-3">
         <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-5 relative shadow-2xl flex flex-col max-h-[90vh]">
@@ -459,12 +465,12 @@
         const SPREADSHEET_API_URL = "https://script.google.com/macros/s/AKfycbwVCyavUmQhXQL6ilEKw96z5ouxEbHnJHq3Bo7plDyhHUip1aBDdqwm-04NpXdW3IgX/exec";
         const RESTAURANT_PHONE = "09142745054";
 
-        // ۵ دسته‌بندی استاندارد (حذف دسته‌بندی خورشت‌ها + عکس دیس پلو زعفرانی مجلل)
+        // Category Definitions
         const CATEGORIES = [
             {
                 id: 'rice',
                 name: 'چلو و غذاهای برنجی',
-                subtitle: 'سینی مجلل چلو مرغ زعفرانی، ته‌چین و برنج اصیل ایرانی',
+                subtitle: 'سینی مجلل چلو مرغ زعفرانی، ته‌چین، خورش و برنج اصیل ایرانی',
                 glow: '#f59e0b',
                 image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80',
                 icon: 'fa-bowl-rice'
@@ -472,7 +478,7 @@
             {
                 id: 'kebab',
                 name: 'کباب و خوراک',
-                subtitle: 'سینی کباب کوبیده مخصوص، برگ گوسفندی و جوجه زعفرانی',
+                subtitle: 'سینی کباب کوبیده سنتی، برگ گوسفندی و جوجه زعفرانی',
                 glow: '#ef4444',
                 image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-fire-burner'
@@ -480,7 +486,7 @@
             {
                 id: 'breakfast',
                 name: 'صبحانه و املت',
-                subtitle: 'املت بازاری مخصوص با نان تازه و کره محلی',
+                subtitle: 'املت بازاری سنتی با نان تازه و کره محلی',
                 glow: '#fbbf24',
                 image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-egg'
@@ -488,7 +494,7 @@
             {
                 id: 'drink',
                 name: 'نوشیدنی',
-                subtitle: 'دوغ محلی نعنایی، شربت‌های اصیل و عرقیجات خنک',
+                subtitle: 'دوغ محلی نعنایی، شربت‌های سنتی و عرقیجات خنک',
                 glow: '#0ea5e9',
                 image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=80',
                 icon: 'fa-glass-water'
@@ -511,45 +517,118 @@
             }
         ];
 
-        // منوی جایگزین (فاقد خورشت‌ها)
+        // Rich Fallback Menu
         const FALLBACK_MENU = [
-            { category: 'چلو و غذاهای برنجی', title: 'سینی مجمع مخصوص خان داداش (چلو زعفرانی، جوجه و ته‌چین)', price: '۵۸۰,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'سینی مجمع مخصوص خان داداش (چلو زعفرانی، جوجه، خورش و ته‌چین)', price: '۵۸۰,۰۰۰', status: 'موجود' },
             { category: 'چلو و غذاهای برنجی', title: 'زرشک پلو با مرغ مجلسی و سس زعفرانی', price: '۲۹۵,۰۰۰', status: 'موجود' },
             { category: 'چلو و غذاهای برنجی', title: 'چلو کباب کوبیده زعفرانی (دو سیخ اعلا)', price: '۳۸۰,۰۰۰', status: 'موجود' },
             { category: 'چلو و غذاهای برنجی', title: 'باقالی پلو با ماهیچه گوسفندی', price: '۶۸۵,۰۰۰', status: 'موجود' },
             { category: 'چلو و غذاهای برنجی', title: 'ته‌چین زعفرانی با مرغ و خلال پسته', price: '۳۱۰,۰۰۰', status: 'موجود' },
+            { category: 'چلو و غذاهای برنجی', title: 'چلو خورش قورمه‌سبزی جاافتاده', price: '۲۷۰,۰۰۰', status: 'موجود' },
 
             { category: 'کباب و خوراک', title: 'کباب برگ گوسفندی ممتاز', price: '۵۹۰,۰۰۰', status: 'موجود' },
             { category: 'کباب و خوراک', title: 'جوجه کباب زعفرانی با استخوان', price: '۳۲۰,۰۰۰', status: 'موجود' },
             { category: 'کباب و خوراک', title: 'کباب لقمه نگین‌دار مخصوص', price: '۳۶۰,۰۰۰', status: 'موجود' },
             { category: 'کباب و خوراک', title: 'خوراک شنیسل مرغ با دورچین', price: '۲۴۰,۰۰۰', status: 'موجود' },
 
-            { category: 'صبحانه و املت', title: 'املت گوجه‌فرنگی بازاری با نان سنگک تازه', price: '۱۴۰,۰۰۰', status: 'موجود' },
+            { category: 'صبحانه و املت', title: 'املت گوجه‌فرنگی سنتی با نان سنگک تازه', price: '۱۴۰,۰۰۰', status: 'موجود' },
             { category: 'صبحانه و املت', title: 'سینی صبحانه ایرانی خان داداش (پنیر، عسل، سرشیر، گردو)', price: '۲۲۰,۰۰۰', status: 'موجود' },
             { category: 'صبحانه و املت', title: 'نیمرو با کره محلی', price: '۹۵,۰۰۰', status: 'موجود' },
 
             { category: 'سوپ', title: 'سوپ جو خامه‌ای مخصوص سرآشپز', price: '۹۵,۰۰۰', status: 'موجود' },
-            { category: 'سوپ', title: 'سوپ ورمیشل و مرغ ویژه', price: '۸۵,۰۰۰', status: 'موجود' },
+            { category: 'سوپ', title: 'سوپ ورمیشل و مرغ سنتی', price: '۸۵,۰۰۰', status: 'موجود' },
 
             { category: 'مخلفات و دورچین', title: 'زیتون پرورده اصیل شمالی', price: '۷۵,۰۰۰', status: 'موجود' },
             { category: 'مخلفات و دورچین', title: 'ماست موسیر کوزه‌ای چکیده', price: '۶۵,۰۰۰', status: 'موجود' },
             { category: 'مخلفات و دورچین', title: 'سالاد شیرازی با آبغوره عسگری', price: '۵۵,۰۰۰', status: 'موجود' },
 
-            { category: 'نوشیدنی', title: 'دوغ محلی مشک نعنایی و گل‌محمدی', price: '۴۵,۰۰۰', status: 'موجود' },
+            { category: 'نوشیدنی', title: 'دوغ محلی سنتی نعنایی و گل‌محمدی', price: '۴۵,۰۰۰', status: 'موجود' },
             { category: 'نوشیدنی', title: 'شربت زعفران و تخم شربتی خنک', price: '۶۵,۰۰۰', status: 'موجود' },
             { category: 'نوشیدنی', title: 'موهیتو دست‌ساز تازه', price: '۷۵,۰۰۰', status: 'موجود' }
         ];
 
-        // سوالات پشتیبان اضطراری در صورت عدم دسترسی به فایل json
-        const BACKUP_QUIZ_QUESTIONS = [
-            { question: "سه جعبه با برچسب‌های «سیب»، «پرتقال» و «مخلوط» وجود دارند. تمام برچسب‌ها اشتباه‌اند. از کدام جعبه یک میوه برداریم؟", options: ["جعبه سیب", "جعبه پرتقال", "جعبه مخلوط", "فرقی ندارد"], answer: "جعبه مخلوط", explanation: "چون برچسب مخلوط اشتباه است، این جعبه فقط یک نوع میوه دارد." },
-            { question: "اگر ۵ ماشین در ۵ دقیقه ۵ قطعه بسازند، ۱۰۰ ماشین در ۵ دقیقه چند قطعه می‌سازند؟", options: ["۲۰", "۵۰", "۱۰۰", "۵۰۰"], answer: "۱۰۰", explanation: "هر ماشین در ۵ دقیقه یک قطعه تولید می‌کند." },
-            { question: "عدد بعدی در دنباله ۱، ۲، ۶، ۲۴، ۱۲۰ چیست؟", options: ["۲۴۰", "۳۶۰", "۶۰۰", "۷۲۰"], answer: "۷۲۰", explanation: "اعداد در ۲، ۳، ۴، ۵ و سپس ۶ ضرب می‌شوند." },
-            { question: "در یک مسابقه از نفر دوم سبقت می‌گیرید. اکنون در چه جایگاهی هستید؟", options: ["اول", "دوم", "سوم", "چهارم"], answer: "دوم", explanation: "شما جایگاه نفر دوم را تصاحب کرده‌اید." },
-            { question: "کدام ادویه از کلاله گل به دست می‌آید و به طلای سرخ معروف است؟", options: ["هل", "زعفران", "دارچین", "زنجبیل"], answer: "زعفران", explanation: "زعفران از کلاله‌های گل زعفران چیده می‌شود." },
-            { question: "فراوان‌ترین عنصر شیمیایی در پوسته کره زمین چیست؟", options: ["آهن", "سیلیسیم", "اکسیژن", "آلومینیوم"], answer: "اکسیژن", explanation: "اکسیژن بیشترین سهم جرمی را در پوسته زمین داراست." },
-            { question: "شاعر کتاب حماسی «شاهنامه» کیست؟", options: ["نظامی", "فردوسی", "مولوی", "سعدی"], answer: "فردوسی", explanation: "ابوالقاسم فردوسی سراینده شاهنامه است." },
-            { question: "در اتاق تاریک، شمع، چراغ نفتی و بخاری دارید. فقط یک کبریت دارید، اول کدام را روشن می‌کنید؟", options: ["شمع", "چراغ نفتی", "بخاری", "کبریت"], answer: "کبریت", explanation: "برای روشن کردن هر کدام، ابتدا باید خود کبریت روشن شود." }
+        // 8-Question Challenge Pool
+        const QUIZ_QUESTIONS = [
+            {
+                id: 1,
+                category: "هوش و منطق",
+                question: "سه جعبه با برچسب‌های «سیب»، «پرتقال» و «مخلوط» وجود دارند. تمام برچسب‌ها اشتباه‌اند. با برداشتن تنها یک میوه از یک جعبه، از کدام جعبه باید شروع کرد؟",
+                options: ["جعبه سیب", "جعبه پرتقال", "جعبه مخلوط", "فرقی ندارد"],
+                answer: "جعبه مخلوط",
+                explanation: "چون برچسب مخلوط اشتباه است، این جعبه فقط یک نوع میوه دارد. با دیدن آن، دو جعبه دیگر نیز مشخص می‌شوند."
+            },
+            {
+                id: 2,
+                category: "هوش و ریاضی",
+                question: "اگر ۵ ماشین در ۵ دقیقه، ۵ قطعه تولید کنند، ۱۰۰ ماشین در ۵ دقیقه چند قطعه تولید می‌کنند؟",
+                options: ["۲۰", "۵۰", "۱۰۰", "۵۰۰"],
+                answer: "۱۰۰",
+                explanation: "هر ماشین در ۵ دقیقه ۱ قطعه می‌سازد؛ پس ۱۰۰ ماشین نیز در ۵ دقیقه ۱۰۰ قطعه می‌سازند."
+            },
+            {
+                id: 3,
+                category: "هوش و دنباله",
+                question: "عدد بعدی در دنباله ۱، ۲، ۶، ۲۴، ۱۲۰ چیست؟",
+                options: ["۲۴۰", "۳۶۰", "۶۰۰", "۷۲۰"],
+                answer: "۷۲۰",
+                explanation: "اعداد به‌ترتیب در ۲، ۳، ۴، ۵ و سپس در ۶ ضرب می‌شوند."
+            },
+            {
+                id: 4,
+                category: "هوش و معما",
+                question: "در یک مسابقه از نفر دوم سبقت می‌گیرید. اکنون در چه جایگاهی هستید؟",
+                options: ["اول", "دوم", "سوم", "چهارم"],
+                answer: "دوم",
+                explanation: "شما جایگاه نفر دوم را تصاحب کرده‌اید، نه نفر اول را."
+            },
+            {
+                id: 5,
+                category: "اطلاعات عمومی",
+                question: "کدام شهر باستانی به شهر هفت تپه معروف است؟",
+                options: ["آتن", "رم", "پاریس", "مادرید"],
+                answer: "رم",
+                explanation: "رم باستان بر روی هفت تپه بنا شده است."
+            },
+            {
+                id: 6,
+                category: "غذا و آشپزی",
+                question: "کدام ادویه از کلاله گل به دست می‌آید و به طلای سرخ معروف است؟",
+                options: ["هل", "زعفران", "دارچین", "زنجبیل"],
+                answer: "زعفران",
+                explanation: "زعفران از کلاله‌های گل زعفران چیده می‌شود."
+            },
+            {
+                id: 7,
+                category: "علم و طبیعت",
+                question: "فراوان‌ترین عنصر شیمیایی در پوسته کره زمین چیست؟",
+                options: ["آهن", "سیلیسیم", "اکسیژن", "آلومینیوم"],
+                answer: "اکسیژن",
+                explanation: "اکسیژن بیشترین سهم جرمی را در پوسته زمین داراست."
+            },
+            {
+                id: 8,
+                category: "سینما",
+                question: "کدام فیلم به کارگردانی کریستوفر نولان درباره ورود به لایه‌های خواب است؟",
+                options: ["Interstellar", "Inception", "Memento", "Dunkirk"],
+                answer: "Inception",
+                explanation: "فیلم اینسپشن (تلقین) به لایه‌های رویا و ضمیر ناخودآگاه می‌پردازد."
+            },
+            {
+                id: 9,
+                category: "ادبیات",
+                question: "شاعر کتاب حماسی «شاهنامه» کیست؟",
+                options: ["نظامی", "فردوسی", "مولوی", "سعدی"],
+                answer: "فردوسی",
+                explanation: "ابوالقاسم فردوسی سراینده شاهنامه است."
+            },
+            {
+                id: 10,
+                category: "هوش و منطق",
+                question: "در اتاق تاریک، شمع، چراغ نفتی و بخاری دارید. فقط یک کبریت دارید، اول کدام را روشن می‌کنید؟",
+                options: ["شمع", "چراغ نفتی", "بخاری", "کبریت"],
+                answer: "کبریت",
+                explanation: "برای روشن کردن هر کدام، ابتدا باید خود کبریت روشن شود."
+            }
         ];
 
         // Global State
@@ -558,20 +637,6 @@
         let searchQuery = '';
         let onlyAvailable = false;
         let cart = [];
-        let fullQuizBank = [];
-
-        // بارگذاری خودکار تمام ۳۳۰ سوال از فایل quiz.json
-        async function fetchQuizBank() {
-            try {
-                const res = await fetch('quiz.json?t=' + Date.now());
-                if (res.ok) {
-                    fullQuizBank = await res.json();
-                }
-            } catch (err) {
-                console.info('Quiz fallback used.');
-            }
-        }
-        fetchQuizBank();
 
         // Audio Helper
         function playSimpleTone(freq, duration = 0.12) {
@@ -686,6 +751,7 @@
             playSimpleTone(550, 0.06);
         }
 
+        // Render Menu Items
         function normalizeStr(s) {
             return (s || '').toString().trim().replace(/[\u200B-\u200D\uFEFF]/g, '').toLowerCase();
         }
@@ -884,7 +950,7 @@
             window.location.href = `sms:${RESTAURANT_PHONE}?body=${encodeURIComponent(msg)}`;
         }
 
-        // ================= QUIZ LOGIC (انتخاب کاملاً تصادفی از کل ۳۳۰ سوال) =================
+        // ================= QUIZ LOGIC =================
         let activeQuiz = [];
         let currentQuizIdx = 0;
         let quizTimer = null;
@@ -892,8 +958,7 @@
         let quizAccepting = true;
 
         function startQuizChallenge() {
-            const pool = (fullQuizBank && fullQuizBank.length >= 8) ? fullQuizBank : BACKUP_QUIZ_QUESTIONS;
-            const shuffled = [...pool].sort(() => 0.5 - Math.random());
+            const shuffled = [...QUIZ_QUESTIONS].sort(() => 0.5 - Math.random());
             activeQuiz = shuffled.slice(0, 8);
             currentQuizIdx = 0;
             quizAccepting = true;
@@ -1132,6 +1197,8 @@
             }
         }
 
+        
+
         // ================= UTILITIES =================
         function openModal(id) {
             const m = document.getElementById(id);
@@ -1190,6 +1257,7 @@
                     renderMenu();
                 }
             } catch (err) {
+                // Keep default rich fallback smoothly
                 console.info('Loaded fallback menu items.');
                 menuItems = [...FALLBACK_MENU];
                 renderMenu();
